@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "90572826283",
+    "firebase_url": "https://warshippies.firebaseio.com",
+    "project_id": "warshippies",
+    "storage_bucket": "warshippies.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:90572826283:android:83b991bc1de84d68",
+        "android_client_info": {
+          "package_name": "com.dcss.wowsass"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "90572826283-678n784o8lge6b48ibs5uinitth2b3fo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPOrQn6PiTlIYmmee7zS2A3OqmzybReYw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -16,37 +16,13 @@
         "cordova-plugin-console": {
             "PACKAGE_NAME": "com.dcss.wowsass"
         },
-        "cordova-plugin-contacts": {
-            "PACKAGE_NAME": "com.dcss.wowsass"
-        },
         "cordova-plugin-device": {
-            "PACKAGE_NAME": "com.dcss.wowsass"
-        },
-        "cordova-plugin-device-motion": {
-            "PACKAGE_NAME": "com.dcss.wowsass"
-        },
-        "cordova-plugin-device-orientation": {
             "PACKAGE_NAME": "com.dcss.wowsass"
         },
         "cordova-plugin-dialogs": {
             "PACKAGE_NAME": "com.dcss.wowsass"
         },
-        "cordova-plugin-file-transfer": {
-            "PACKAGE_NAME": "com.dcss.wowsass"
-        },
-        "cordova-plugin-geolocation": {
-            "PACKAGE_NAME": "com.dcss.wowsass"
-        },
-        "cordova-plugin-globalization": {
-            "PACKAGE_NAME": "com.dcss.wowsass"
-        },
         "cordova-plugin-inappbrowser": {
-            "PACKAGE_NAME": "com.dcss.wowsass"
-        },
-        "cordova-plugin-media": {
-            "PACKAGE_NAME": "com.dcss.wowsass"
-        },
-        "cordova-plugin-media-capture": {
             "PACKAGE_NAME": "com.dcss.wowsass"
         },
         "cordova-plugin-network-information": {
@@ -55,25 +31,49 @@
         "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "com.dcss.wowsass"
         },
-        "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "com.dcss.wowsass"
-        },
         "cordova-plugin-vibration": {
             "PACKAGE_NAME": "com.dcss.wowsass"
         },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.dcss.wowsass"
         },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "com.dcss.wowsass"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "com.dcss.wowsass"
+        },
+        "cordova-plugin-media": {
+            "PACKAGE_NAME": "com.dcss.wowsass"
+        },
+        "cordova-plugin-device-motion": {
+            "PACKAGE_NAME": "com.dcss.wowsass"
+        },
+        "cordova-plugin-globalization": {
+            "PACKAGE_NAME": "com.dcss.wowsass"
+        },
         "phonegap-plugin-push": {
-            "SENDER_ID": "90572826283",
+            "SENDER_ID": "222",
+            "PACKAGE_NAME": "com.dcss.wowsass"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.dcss.wowsass"
+        },
+        "cordova-plugin-device-orientation": {
+            "PACKAGE_NAME": "com.dcss.wowsass"
+        },
+        "cordova-plugin-fcm": {
+            "PACKAGE_NAME": "com.dcss.wowsass"
+        },
+        "cordova-plugin-firebase": {
+            "PACKAGE_NAME": "com.dcss.wowsass"
+        },
+        "cordova-plugin-media-capture": {
             "PACKAGE_NAME": "com.dcss.wowsass"
         }
     },
     "dependent_plugins": {
         "cordova-plugin-compat": {
-            "PACKAGE_NAME": "com.dcss.wowsass"
-        },
-        "cordova-plugin-file": {
             "PACKAGE_NAME": "com.dcss.wowsass"
         }
     }

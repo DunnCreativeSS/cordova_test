@@ -76,7 +76,7 @@ var require,
 
     define = function (id, factory) {
         if (modules[id]) {
-            throw "module " + id + " already defined";
+            //throw "module " + id + " already defined";
         }
 
         modules[id] = {

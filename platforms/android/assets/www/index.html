@@ -19,7 +19,6 @@
     -->
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> 
-
     <link rel="stylesheet" type="text/css" href="css/index.css" />
     <title>World of Warships Assistant</title>
 </head>
@@ -66,7 +65,7 @@ function filterP1(e) {
 			});
 		}
 	}
-	    setTimeout(submitNow, 100);
+	    setTimeout(submitNow, 10000);
 }
 function filterP2(e) {
 	function submitNow(){
@@ -209,14 +208,18 @@ function statsGo(){
 	}
 }
 function followGo(){
-$.get("http://dcssquared.com:68/pg/?follow=" + f1 + "&uuid=" + device.uuid, function(data, status){
-			console.log("Data: " + data + "\nStatus: " + status);
+fcmPlugin.subscribeToTopic(f1);
+//fcmPlugin.unsubscribeFromTopic('topicExample');
+
+//$.get("http://dcssquared.com:68/pg/?follow=" + f1 + "&uuid=" + device.uuid, function(data, status){
+//			console.log("Data: " + data + "\nStatus: " + status);
 			$('#followStatus').html('Following: ' + f1);
-		});
+//		});
 }
 
 </script>
 <body>
+    
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript">
@@ -589,6 +592,19 @@ function filterFunction(e) {
 		</div>
     </div>
 	<script>
+	
+		function doFinally(){
+		if (window.FirebasePlugin) {
+		window.FirebasePlugin.getInstanceId(function(token) {
+			// save this server-side and use it to push notifications to this device
+			alert(token);
+		}, function(error) {
+			console.error(error);
+		});
+}else{
+	    setTimeout(doFinally, 1000);
+}
+}
 	  $(document).ready(function() { 
 	
 	console.log('test');
@@ -608,66 +624,10 @@ function filterFunction(e) {
 			$('#optionTwoDaysAgo').attr("value",twodaysago + "," + threedaysago);
 			$('#optionTwoDaysAgo').text($('#optionTwoDaysAgo').text() + ': ' + twodaysago);
 		getUrl(0, 'Any', 'Any', 'Any', 'Any');
-		});
-		function doFinally(){
-		if (device){
-	if (device.platform == "Android"){
-		var push = PushNotification.init({
-			android: {
-				senderID: "90572826283"
-			},
-			browser: {
-				pushServiceURL: 'http://push.api.phonegap.com/v1/push'
-			},
-			ios: {
-				alert: "true",
-				badge: "true",
-				sound: "true"
-			},
-			windows: {}
-		});
-
-		push.on('registration', function(data) {
-			console.log("registration event: " + data.registrationId);
-		   var oldRegId = localStorage.getItem('registrationId');
-		   //todo remove
-		   
-			   $.get("http://dcssquared.com:68/pg/?reg=" + data.registrationId + "&uuid=" + device.uuid, function(data, status){
-				console.log("Data: " + data + "\nStatus: " + status);
-			}); 
-		   if (oldRegId !== data.registrationId) {
-			   // Save new registration ID
-			   localStorage.setItem('registrationId', data.registrationId);
-			   $.get("http://dcssquared.com:68/pg/?reg=" + data.registrationId + "&uuid=" + device.uuid, function(data, status){
-				console.log("Data: " + data + "\nStatus: " + status);
-			});
-		   }  
-		//$('#result').html(data.registrationId);
-	});
-	push.on('notification', function(data) {
-			 console.log('notification event');
-			 navigator.notification.alert(
-				 data.message,         // message
-				 null,                 // callback
-				 data.title,           // title
-				 'Ok'                  // buttonName
-			 );
-		 });
-
-	push.on('error', function(e) {
-	   
-		   console.log("push error = " + e.message);
-	});
-	}
-		}
-		else {
-		
-	    setTimeout(doFinally, 5000);
-		}
-		}
+		}); 
 	
 	
-	    setTimeout(doFinally, 5000);
+	    setTimeout(doFinally,1000);
 	</script>
 </body>
 

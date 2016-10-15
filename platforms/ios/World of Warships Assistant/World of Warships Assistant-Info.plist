@@ -32,19 +32,6 @@
     <string/>
     <key>NSMainNibFile~ipad</key>
     <string/>
-    <key>UISupportedInterfaceOrientations</key>
-    <array>
-      <string>UIInterfaceOrientationPortrait</string>
-      <string>UIInterfaceOrientationLandscapeLeft</string>
-      <string>UIInterfaceOrientationLandscapeRight</string>
-    </array>
-    <key>UISupportedInterfaceOrientations~ipad</key>
-    <array>
-      <string>UIInterfaceOrientationPortrait</string>
-      <string>UIInterfaceOrientationLandscapeLeft</string>
-      <string>UIInterfaceOrientationPortraitUpsideDown</string>
-      <string>UIInterfaceOrientationLandscapeRight</string>
-    </array>
     <key>UIRequiresFullScreen</key>
     <true/>
     <key>NSAppTransportSecurity</key>
@@ -59,8 +46,14 @@
       <string>remote-notification</string>
     </array>
     <key>GCM_SENDER_ID</key>
-    <string>90572826283</string>
+    <string>222</string>
     <key>IS_GCM_ENABLED</key>
     <true/>
+    <key>NSMicrophoneUsageDescription</key>
+    <string/>
+    <key>NSCameraUsageDescription</key>
+    <string/>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string/>
   </dict>
 </plist>
