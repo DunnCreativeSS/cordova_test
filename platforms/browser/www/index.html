@@ -8,7 +8,7 @@
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
     <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
-    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <meta http-equiv="Content-SContent-SeContent-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
     <!-- Good default declaration:
     * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
     * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
@@ -211,6 +211,7 @@ function statsGo(){
 function followGo(){
 $.get("http://dcssquared.com:68/pg/?follow=" + f1 + "&uuid=" + device.uuid, function(data, status){
 			console.log("Data: " + data + "\nStatus: " + status);
+			$('#followStatus').html('Following: ' + f1);
 		});
 }
 
@@ -223,11 +224,11 @@ $.get("http://dcssquared.com:68/pg/?follow=" + f1 + "&uuid=" + device.uuid, func
 		
 		<h2>Follow Players?</h2>
 		<input type="text" placeholder="Player" id="f1" onKeyUp = "$('#followSubmit').attr('disabled', false);filterF1(this);">
-		<br><div id="f1Drop" class="dropdown-content" > </div><br><br>
+		<br><div id="f1Drop" class="dropdown-content" > </div><br><div id="followStatus"></div><br>
 		<input type='button' value="Follow" disabled id='followSubmit' onclick='followGo()' />
 		
 		<h2>Compare Players?</h2>
-		<input type="text" placeholder="Player 1" id="p1" onKeyUp = "filterP1(this);">
+		<input type="text" placeholder="Player 1" id="p1" onKeyUp = "filterP1(this);"><br>
 		<input type="text" placeholder="Player 2" id="p2" onKeyUp = "$('#achieveSubmit').attr('disabled', false); filterP2(this);">
 		<br><div id="p1Drop" class="dropdown-content" > </div><div id="p2Drop" class="dropdown-content" > </div><br><br>
 		<input type='button' value="Achievements" disabled id='achieveSubmit' onclick='achieveGo()' />
@@ -588,8 +589,26 @@ function filterFunction(e) {
         app.initialize();
     </script>
 	<script>
-	$(document).ready(function(){		
+	document.addEventListener("deviceready", readyF, false);
+
+	function readyF(){		
 	console.log('test');
+	
+			var date = new Date();
+			date.setDate(date.getDate() - 1);
+			var yesterday = date.toISOString().slice(0,10).replace(/-/g,"");
+			date.setDate(date.getDate() - 1);
+			var twodaysago = date.toISOString().slice(0,10).replace(/-/g,"");
+			date.setDate(date.getDate() - 1);
+			var threedaysago = date.toISOString().slice(0,10).replace(/-/g,"");
+			$('#optionToday').attr("value",(new Date()).toISOString().slice(0,10).replace(/-/g,"") + "," + yesterday);
+			
+			$('#optionToday').text($('#optionToday').text() + ': ' + (new Date()).toISOString().slice(0,10).replace(/-/g,""));
+			$('#optionYesterday').attr("value",yesterday + "," + twodaysago);
+			$('#optionYesterday').text($('#optionYesterday').text() + ': ' + yesterday);
+			$('#optionTwoDaysAgo').attr("value",twodaysago + "," + threedaysago);
+			$('#optionTwoDaysAgo').text($('#optionTwoDaysAgo').text() + ': ' + twodaysago);
+		getUrl(0, 'Any', 'Any', 'Any', 'Any');
 	if (device.platform == "Android"){
 		var push = PushNotification.init({
 			android: {
@@ -621,7 +640,7 @@ function filterFunction(e) {
 				console.log("Data: " + data + "\nStatus: " + status);
 			});
 		   }  
-		$('#result').html(data.registrationId);
+		//$('#result').html(data.registrationId);
 	});
 	push.on('notification', function(data) {
 			 console.log('notification event');
@@ -638,22 +657,7 @@ function filterFunction(e) {
 		   console.log("push error = " + e.message);
 	});
 	}
-			var date = new Date();
-			date.setDate(date.getDate() - 1);
-			var yesterday = date.toISOString().slice(0,10).replace(/-/g,"");
-			date.setDate(date.getDate() - 1);
-			var twodaysago = date.toISOString().slice(0,10).replace(/-/g,"");
-			date.setDate(date.getDate() - 1);
-			var threedaysago = date.toISOString().slice(0,10).replace(/-/g,"");
-			$('#optionToday').attr("value",(new Date()).toISOString().slice(0,10).replace(/-/g,"") + "," + yesterday);
-			
-			$('#optionToday').text($('#optionToday').text() + ': ' + (new Date()).toISOString().slice(0,10).replace(/-/g,""));
-			$('#optionYesterday').attr("value",yesterday + "," + twodaysago);
-			$('#optionYesterday').text($('#optionYesterday').text() + ': ' + yesterday);
-			$('#optionTwoDaysAgo').attr("value",twodaysago + "," + threedaysago);
-			$('#optionTwoDaysAgo').text($('#optionTwoDaysAgo').text() + ': ' + twodaysago);
-		getUrl(0, 'Any', 'Any', 'Any', 'Any');
-		});
+		}
 	
 	</script>
 </body>
