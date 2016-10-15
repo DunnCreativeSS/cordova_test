@@ -23,6 +23,11 @@
     <link rel="stylesheet" type="text/css" href="css/index.css" />
     <title>World of Warships Assistant</title>
 </head>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+        app.initialize();
+    </script>
 <script>
 f1 = ""
 f1s = ""
@@ -211,6 +216,7 @@ function statsGo(){
 function followGo(){
 $.get("http://dcssquared.com:68/pg/?follow=" + f1 + "&uuid=" + device.uuid, function(data, status){
 			console.log("Data: " + data + "\nStatus: " + status);
+			$("#followStat").append('Following: ' + data);
 		});
 }
 
@@ -223,7 +229,7 @@ $.get("http://dcssquared.com:68/pg/?follow=" + f1 + "&uuid=" + device.uuid, func
 		
 		<h2>Follow Players?</h2>
 		<input type="text" placeholder="Player" id="f1" onKeyUp = "$('#followSubmit').attr('disabled', false);filterF1(this);">
-		<br><div id="f1Drop" class="dropdown-content" > </div><br><br>
+		<br><div id="f1Drop" class="dropdown-content" > </div><br><div id="followStat"></div><br>
 		<input type='button' value="Follow" disabled id='followSubmit' onclick='followGo()' />
 		
 		<h2>Compare Players?</h2>
@@ -582,15 +588,11 @@ function filterFunction(e) {
 		
 		</div>
     </div>
-    <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript">
-        app.initialize();
-    </script>
 	<script>
 	$(document).ready(function(){		
 	console.log('test');
-	if (device.platform == "Android"){
+	console.log(window.device.platform);
+	if (window.device.platform == "Android"){
 		var push = PushNotification.init({
 			android: {
 				senderID: "855392751957"
