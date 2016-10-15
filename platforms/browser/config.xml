@@ -7,8 +7,8 @@
         <param name="browser-package" value="Device" />
     </feature>
     <name>World of Warships Assistant</name>
-    <description>Gives info about all dem ships. Cept Arp and Dragon because who cares?</description>
-  <author href="http://dcssquared.com" email="jarett@dcssquared.com">DCSS</author>
+    <description>Hello World sample application that responds to the deviceready event.</description>
+    <author email="support@phonegap.com" href="http://phonegap.com">PhoneGap Team</author>
     <content src="index.html" />
     <icon src="icon.png" />
     <access origin="*" />
