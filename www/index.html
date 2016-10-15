@@ -18,94 +18,371 @@
     * Create your own at http://cspisawesome.com
     -->
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> 
 
     <link rel="stylesheet" type="text/css" href="css/index.css" />
-    <title>Jare's Flippa App</title>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> 
+    <title>World of Warships Assistant</title>
 </head>
 
-<body>
-	<div class="container2" id="result" style="color:red; display:none;"><br><br>
-	<input type="submit" value="back" onclick="goback();" />
-	</div>
-	<div class="container1" style="display:none;">
-	<div class="form-style-5">
+<body><br><br><br><br>
+    <div>
+        <h1>World of Warships Cheat Sheet</h1>
+
+		<div style="display:none;" id = "shiphere" align="left">
 		
-			<p>Met Reserve? T/F/A for All <input type="text" id="reserve" name="reserve" value="A" /> </p>
-			<p>Max Price? $<input type="text" name="max_price" id="max_price" value="200000" /> </p> 
-			<input type="submit" onclick='submitForm()'>
+		</div>
+		<div id = "formhere" align="left">
 		
-	</div></div>
-    <div class="app">
-		<br>
-        <h1>Jare's Flippa App</h1>
-		<br>
-        <div id="deviceready" class="blink">
-            <p class="event listening">Connecting to Device</p>
-            <p class="event received">Enter</p>
-        </div>
+			<input type="text" placeholder="Ship Name.." id="boatIn" onKeyUp = "filterBoats(this);">
+			<div class="dropdown">
+			    <button onclick="myFunction(1)" id = "tierDrop" data-tier = "0" class="dropbtn">Any Tier</button>
+			    <div id="myDropdown1" class="dropdown-content">
+				<input type="text" placeholder="Search.." id="tierIn" onKeyUp = "filterFunction(this);">
+				<a onclick="tierClick(0);">Any Tier</a>
+				<a onclick="tierClick(1);">Tier 1</a>
+				<a onclick="tierClick(2);">Tier 2</a>
+				<a onclick="tierClick(3);">Tier 3</a>
+				<a onclick="tierClick(4);">Tier 4</a>
+				<a onclick="tierClick(5);">Tier 5</a>
+				<a onclick="tierClick(6);">Tier 6</a>
+				<a onclick="tierClick(7);">Tier 7</a>
+				<a onclick="tierClick(8);">Tier 8</a>
+				<a onclick="tierClick(9);">Tier 9</a>
+				<a onclick="tierClick(10);">Tier 10</a>
+			  </div>
+			  <button onclick="myFunction(2)" id = "classDrop" data-class = "Any" class="dropbtn">Any Class</button>
+			    <div id="myDropdown2" class="dropdown-content">
+				<input type="text" placeholder="Search.." id="myInput2" onkeyup="filterFunction(this);">
+				<a onclick="classClick('Any');">Any Class</a>
+				<a onclick="classClick('AirCarrier');">Aircraft Carrier</a>
+				<a onclick="classClick('Battleship');">Battleship</a>
+				<a onclick="classClick('Cruiser');">Cruiser</a>
+				<a onclick="classClick('Destroyer');">Destroyer</a>
+			  </div>
+			  <button onclick="myFunction(4)" id = "nationDrop" data-nation="Any" class="dropbtn">Any Nation</button>
+			    <div id="myDropdown4" class="dropdown-content">
+				<input type="text" placeholder="Search.." id="myInput4" onkeyup="filterFunction(this);">
+				<a onclick="nationClick('Any');">Any Nation</a>
+				<a onclick="nationClick('japan');">Japan</a>
+				<a onclick="nationClick('usa');">USA</a>
+				<a onclick="nationClick('ussr');">USSR</a>
+				<a onclick="nationClick('germany');">Germany</a>
+				<a onclick="nationClick('uk');">UK</a>
+				<a onclick="nationClick('pan_asia');">Asia?</a>
+				<a onclick="nationClick('commonwealth');">Commonwealth?</a>
+				<a onclick="nationClick('france');">France?</a>
+				<a onclick="nationClick('poland');">Poland?</a>
+			  </div>
+			  
+			  <button onclick="myFunction(3)" id = "premiumDrop" data-premium="Any" class="dropbtn">Any Premium</button>
+			    <div id="myDropdown3" class="dropdown-content">
+				<input type="text" placeholder="Search.." id="myInput3" onkeyup="filterFunction(this);">
+				<a onclick="premClick('Any');">Any Premium</a>
+				<a onclick="premClick('true');">Yes Premium</a>
+				<a onclick="premClick('false');">No Premium</a>
+			  </div>
+			</div>
+		</div>
+<script>
+var bflast = ""
+var boatfilter = " "
+var key = "1c87ac40573cc09e07239cd2ce858bb1";
+var url = "https://api.worldofwarships.com/wows/encyclopedia/ships/?application_id=" + key
+function shipback(){
+	$('#result').show();
+	$('#formhere').show();
+	$('#shiphere').hide();
+}
+function goShip(ship_id){
+console.log(ship_id);
+	$('#result').hide();
+	$('#formhere').hide();
+	$('#shiphere').html('');
+	$('#shiphere').show();
+	$('#shiphere').append('<br><br><br><div onclick="shipback()"><h1>Back</h1></div>');
+	$.getJSON(url + "&ship_id=" + ship_id, function(data) {
+		$('#shiphere').append($('<img>', {
+			src: data['data'][ship_id]['images']['small']
+		}));
+		$.each(data['data'][ship_id], function(index2, element) {
+				if (index2 != 'images' && index2 != 'modules' && index2 != 'modules_tree' && index2 != 'ship_id_str' && index2 != 'default_profile' && index2 != 'upgrades' && index2 != 'next_ships' && index2 != 'mod_slots'){
+					$('#shiphere').append($('<p>', {
+						text: index2 + ": " + element
+					}));
+					//$('#shiphere').append('<br>');
+				}
+				else if (index2 == 'modules_tree'){
+						//$('#shiphere').append('<br>');
+					$.each(element, function(index, e2) {
+						$('#shiphere').append($('<p>', {
+							text: "Module: " + e2.type + ": " + e2.name
+						}));
+						//$('#shiphere').append('<br>');
+					});
+						//$('#shiphere').append('<br>');
+				}
+				else if (index2 == 'default_profile'){
+						//$('#shiphere').append('<br>');
+					$.each(element['engine'], function(index, e2) {
+						if (index != 'engine_id' && index != 'engine_id_str'){
+						$('#shiphere').append($('<p>', {
+							text: "Engine: " + index + ": " + e2
+						}));
+						//$('#shiphere').append('<br>');
+						}
+					});
+					$.each(element['artillery'], function(index, e2) {
+					
+						if (index != 'artillery_id_str' && index != 'slots' && index != 'artillery_id' && index != 'shells'){
+						$('#shiphere').append($('<p>', {
+							text: "Artillery: " + index + ": " + e2
+						}));
+						//$('#shiphere').append('<br>');
+						}
+						else if (index == 'shells'){
+						console.log(element['artillery'][index]['AP']['damage']);
+						$.each(element['artillery'][index]['AP'], function(index4, e4) {
+						if (element['artillery'][index]['AP']['damage']){
+							$('#shiphere').append($('<p>', {
+							text: "AP Shells: " + index4 + ": " + e4
+						}));
+						//$('#shiphere').append('<br>');
+						}
+						
+					});
+					$.each(element['artillery'][index]['HE'], function(index4, e4) {
+						if (element['artillery'][index]['HE']['damage']){
+							$('#shiphere').append($('<p>', {
+							text: "HE Shells: " + index4 + ": " + e4
+						}));
+						//$('#shiphere').append('<br>');
+						}
+						
+					});
+						}
+					});
+					
+					$.each(element['mobility'], function(index, e2) {
+						$('#shiphere').append($('<p>', {
+							text: "Mobility: " + index + ": " + e2
+						}));
+						//$('#shiphere').append('<br>');
+					});
+					$.each(element['hull'], function(index, e2) {
+						if (index != 'hull_id' && index != 'hull_id_str' && index != 'range'){
+						$('#shiphere').append($('<p>', {
+							text: "Hull: " + index + ": " + e2
+						}));
+						//$('#shiphere').append('<br>');
+						}
+					});
+					$.each(element['torpedoes'], function(index, e2) {
+						$('#shiphere').append($('<p>', {
+							text: "TORPS: " + index + ": " + e2
+						}));
+						//$('#shiphere').append('<br>');
+					});
+					$.each(element['torpedo_bomber'], function(index, e2) {
+						$('#shiphere').append($('<p>', {
+							text: "Torp Bombers: " + index + ": " + e2
+						}));
+						//$('#shiphere').append('<br>');
+					});
+					$.each(element['fighters'], function(index, e2) {
+						$('#shiphere').append($('<p>', {
+							text: "Fighters: " + index + ": " + e2
+						}));
+						//$('#shiphere').append('<br>');
+					});
+					$.each(element['dive_bomber'], function(index, e2) {
+						$('#shiphere').append($('<p>', {
+							text: "Dive Bombers: " + index + ": " + e2
+						}));
+						//$('#shiphere').append('<br>');
+					});
+					$.each(element['concealment'], function(index, e2) {
+						$('#shiphere').append($('<p>', {
+							text: "Concealment: " + index + ": " + e2
+						}));
+						//$('#shiphere').append('<br>');
+					});
+					$.each(element['armour'], function(index, e2) {
+						if (index != 'deck' && index != 'range' && index != 'extremities' && index != 'casemate' && index != 'citadel'){
+							$('#shiphere').append($('<p>', {
+								text: "Armour: " + index + ": " + e2
+							}));
+							//$('#shiphere').append('<br>');
+						}
+						else {
+					$.each(element[index], function(index3, e3) {
+							$('#shiphere').append($('<p>', {
+								text: "Armour: " + index3 + ": " + e3
+							}));
+							//$('#shiphere').append('<br>');
+							
+						});
+						}
+					});
+						//$('#shiphere').append('<br>');
+				}
+		});
+		$.each(data['data'][ship_id]['next_ships'], function(index, e) {
+
+			$.getJSON(url + "&ship_id=" + index.toString(), function(data2) {
+				$('#shiphere').append('<br>Next Ship: ' + data2['data'][index]['name'] + ', ' + e.toString() + ' exp!<br>');
+				$('#shiphere').append($('<img>', {
+					src: data2['data'][index]['images']['small'],
+					onclick: "goShip('" + index.toString() + "') "
+				}));
+			});
+		
+						});
+	});
+}
+function getUrl(tier, nation, theclass, is_premium, boatName){
+
+		$( "a" ).each(function( index ) {
+			$(this).show();
+		});
+		$.getJSON(url, function(data) {
+			$.each(data['data'], function(index, element) {
+			    if ((element.is_premium.toString() == is_premium || is_premium == 'Any') && (element.type == theclass || theclass == 'Any') && (element.name.indexOf('ARP') == -1 && element.name.indexOf('Dragon') == -1 ) && (element.tier == tier || tier == 0) && (nation == element.nation || nation == 'Any')){
+					console.log(boatfilter); 
+					if (boatfilter == " "){
+						$('#result').append($('<p>', {
+							text: element.name
+						}));
+						$('#result').append($('<img>', {
+							src: element.images.small,
+							onclick: "goShip('" + element.ship_id.toString() + "') "
+						}));
+						$('#result').append('<br><br><br>');
+					}
+					else if ((element.name.toUpperCase().indexOf(boatfilter.toUpperCase()) > -1)) {
+						$('#result').append($('<p>', {
+							text: element.name
+						}));
+						$('#result').append($('<img>', {
+							src: element.images.small,
+							onclick: "goShip('" + element.ship_id.toString() + "') "
+						}));
+						$('#result').append('<br><br><br>');
+					}
+				}
+			});
+		});
+		}
+
+function classClick(theclass){
+	$('#result').html("");
+	$('#myDropdown2').hide();
+	$('#classDrop').data('class',theclass);
+	if (theclass == 'Any'){
+		$('#classDrop').text('Any Class');
+	}
+	else {
+		$('#classDrop').text(theclass.charAt(0).toUpperCase() + theclass.slice(1));
+	}
+	getUrl($('#tierDrop').data('tier'), $('#nationDrop').data('nation'), $('#classDrop').data('class'),  $('#premiumDrop').data('premium'), $('#boatIn').value);
+}
+function nationClick(nation){
+	$('#result').html("");
+	$('#myDropdown4').hide();
+	$('#nationDrop').data('nation',nation);
+	if (nation == 'Any'){
+		$('#nationDrop').text('Any Nation');
+	}
+	else {
+		$('#nationDrop').text(nation.charAt(0).toUpperCase() + nation.slice(1));
+	}
+	getUrl($('#tierDrop').data('tier'), $('#nationDrop').data('nation'), $('#classDrop').data('class'),  $('#premiumDrop').data('premium'), $('#boatIn').value);
+}
+function tierClick(tier){
+	$('#result').html("");
+	$('#myDropdown1').hide();
+	$('#tierDrop').data('tier',tier);
+	if (tier == 0){
+		$('#tierDrop').text('Any Tier');
+	}
+	else {
+		$('#tierDrop').text('Tier ' + tier);
+	}
+	getUrl($('#tierDrop').data('tier'), $('#nationDrop').data('nation'), $('#classDrop').data('class'),  $('#premiumDrop').data('premium'), $('#boatIn').value);
+
+}
+function premClick(prem){
+	$('#result').html("");
+	$('#myDropdown3').hide();
+	if (prem == 'Any'){
+		$('#premiumDrop').text('Any Premium');
+		$('#premiumDrop').data('premium',prem);
+	}
+	else if (prem == 'false'){
+		$('#premiumDrop').text('Not Premium');
+		$('#premiumDrop').data('premium','false');
+	}
+	else if (prem == 'true'){
+		$('#premiumDrop').text('Yes Premium');
+		$('#premiumDrop').data('premium','true');
+	}
+	getUrl($('#tierDrop').data('tier'), $('#nationDrop').data('nation'), $('#classDrop').data('class'),  $('#premiumDrop').data('premium'), $('#boatIn').value);
+
+}
+function myFunction(which) {
+
+	$('#myDropdown' + which).show();
+}
+function filterBoats(e) {
+	function submitNow(){
+		var input, filter, ul, li, a, i;
+		if (e && e.value != bflast){
+			boatfilter = e.value;
+		}
+		else {
+			boatfilter = " ";
+		}
+		$('#result').html("");
+		getUrl($('#tierDrop').data('tier'), $('#nationDrop').data('nation'), $('#classDrop').data('class'),  $('#premiumDrop').data('premium'), $('#boatIn').value);
+		bflast = boatfilter;
+	}
+	    setTimeout(submitNow, 100);
+}
+function filterFunction(e) {
+	function submitNow(){
+		var input, filter, ul, li, a, i;
+		if (e){
+			filter = e.value;
+		}
+		else {
+			filter = " ";
+		}
+		$( "a" ).each(function( index ) {
+			if (($(this).text().toUpperCase().indexOf(filter) > -1) || filter == null) {
+				$(this).show();
+			} else {
+				$(this).hide();
+			}
+		});
+	}
+	    setTimeout(submitNow, 10);
+}
+</script>
+		<div id = "result">
+		
+		</div>
     </div>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript">
-		console.log('test1'); 
         app.initialize();
     </script>
-<script>
-
-function goback(){
-	$('#result').html('<br><br><input type="submit" value="back" onclick="goback();" />');
-	$('.container2').hide();
-	$('.container1').show();
-}
-function submitForm() {
-
-	$('.container2').show();
-	$('.container1').hide();
-	var url = 'http://dcssquared.com:68/do/?reserve_met=' + document.getElementById("reserve").value + "&price_max=" + document.getElementById("max_price").value
-	console.log(url);
-	var xhr = new XMLHttpRequest();
-    xhr.open('get', url, true);
-    xhr.responseType = 'json';
-    xhr.onload = function() {
-      var status = xhr.status;
-	  console.log(status);
-      if (status == 200) {
-	    arr = xhr.response;
-        //alert('Your Json result is:  ' + xhr.response);
-		for (var i = 0; i < arr.length; i++){
-			 $('#result').append("<br><br>");
-			  var obj = arr[i];
-			  for (var key in obj){
-				var value = obj[key];
-				if (key == 'semRush'){
-					 $('#result').append("<br><a href='#' onclick='window.open(encodeURI(\"" + value + "\"), \"_system\")'>SEMRush</a>"); 
-				}
-				else if (key == 'listing'){
-					 $('#result').append("<br><br><a href='#' onclick='window.open(encodeURI(\"" + value + "\"), \"_system\")'>Listing</a><br>"); 
-				}
-				else if (key == 'link'){
-					 $('#result').append("<br><a href='#'  onclick='window.open(encodeURI(\"" + value + "\"), \"_system\")'>" + obj['domain'] + "</a>"); 
-				}
-				else if (key != 'id'){
-					 $('#result').append("<br>" + key + ": " + value);
-				}
-			  }
-		}
-		//$('#result').innerText = 
-	  } else {
-        reject(status);
-      }
-    };
-    xhr.send();
+	<script>
+	$(document).ready(function(){
+	getUrl(0, 'Any', 'Any', 'Any', 'Any');
 	
-
-}
- $('#deviceready').click(function(){   
-	$('.app').hide();
-	$('.container1').show();
- });
-</script>
+		});
+	
+	</script>
 </body>
 
 </html>
