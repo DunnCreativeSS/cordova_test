@@ -65,7 +65,7 @@ function filterP1(e) {
 			});
 		}
 	}
-	    setTimeout(submitNow, 10000);
+	    setTimeout(submitNow, 100);
 }
 function filterP2(e) {
 	function submitNow(){
@@ -595,12 +595,31 @@ function filterFunction(e) {
 	
 		function doFinally(){
 		if (window.FirebasePlugin) {
-		window.FirebasePlugin.getInstanceId(function(token) {
-			// save this server-side and use it to push notifications to this device
+		FCMPlugin.getToken(
+		  function(token){
 			alert(token);
-		}, function(error) {
-			console.error(error);
-		});
+		  },
+		  function(err){
+			console.log('error retrieving token: ' + err);
+		  }
+		)
+    FCMPlugin.onNotification(
+      function(data){
+        if(data.wasTapped){
+          //Notification was received on device tray and tapped by the user.
+          $cordovaDialogs.alert(data.notification.body);
+        }else{
+          //Notification was received in foreground. Maybe the user needs to be notified.
+          $cordovaDialogs.alert(data.notification.body);
+          //$cordovaToast.showShortCenter( JSON.stringify(data) );
+        }
+      },
+      function(msg){
+        $('#body').append('onNotification callback successfully registered: ' + msg);
+      },
+      function(err){
+        $('#body').append('Error registering onNotification callback: ' + err);
+      });
 }else{
 	    setTimeout(doFinally, 1000);
 }
