@@ -210,7 +210,7 @@ function statsGo(){
 }
 function followGo(){
 $.get("http://dcssquared.com:68/pg/?follow=" + f1 + "&uuid=" + device.uuid, function(data, status){
-			alert("Data: " + data + "\nStatus: " + status);
+			console.log("Data: " + data + "\nStatus: " + status);
 		});
 }
 
@@ -590,52 +590,54 @@ function filterFunction(e) {
 	<script>
 	$(document).ready(function(){		
 	console.log('test');
-	var push = PushNotification.init({
-    android: {
-        senderID: "855392751957"
-    },
-    browser: {
-        pushServiceURL: 'http://push.api.phonegap.com/v1/push'
-    },
-    ios: {
-        alert: "true",
-        badge: "true",
-        sound: "true"
-    },
-    windows: {}
-});
-
-push.on('registration', function(data) {
-console.log("registration event: " + data.registrationId);
-       var oldRegId = localStorage.getItem('registrationId');
-	   //todo remove
-	   
-           $.get("http://dcssquared.com:68/pg/?reg=" + data.registrationId + "&uuid=" + device.uuid, function(data, status){
-			console.log("Data: " + data + "\nStatus: " + status);
-		}); 
-       if (oldRegId !== data.registrationId) {
-           // Save new registration ID
-           localStorage.setItem('registrationId', data.registrationId);
-           $.get("http://dcssquared.com:68/pg/?reg=" + data.registrationId + "&uuid=" + device.uuid, function(data, status){
-			console.log("Data: " + data + "\nStatus: " + status);
+	if (device.platform == "Android"){
+		var push = PushNotification.init({
+			android: {
+				senderID: "855392751957"
+			},
+			browser: {
+				pushServiceURL: 'http://push.api.phonegap.com/v1/push'
+			},
+			ios: {
+				alert: "true",
+				badge: "true",
+				sound: "true"
+			},
+			windows: {}
 		});
-       }  
-    $('#result').html(data.registrationId);
-});
-push.on('notification', function(data) {
-         console.log('notification event');
-         navigator.notification.alert(
-             data.message,         // message
-             null,                 // callback
-             data.title,           // title
-             'Ok'                  // buttonName
-         );
-     });
 
-push.on('error', function(e) {
-   
-       console.log("push error = " + e.message);
-});
+		push.on('registration', function(data) {
+			console.log("registration event: " + data.registrationId);
+		   var oldRegId = localStorage.getItem('registrationId');
+		   //todo remove
+		   
+			   $.get("http://dcssquared.com:68/pg/?reg=" + data.registrationId + "&uuid=" + device.uuid, function(data, status){
+				console.log("Data: " + data + "\nStatus: " + status);
+			}); 
+		   if (oldRegId !== data.registrationId) {
+			   // Save new registration ID
+			   localStorage.setItem('registrationId', data.registrationId);
+			   $.get("http://dcssquared.com:68/pg/?reg=" + data.registrationId + "&uuid=" + device.uuid, function(data, status){
+				console.log("Data: " + data + "\nStatus: " + status);
+			});
+		   }  
+		$('#result').html(data.registrationId);
+	});
+	push.on('notification', function(data) {
+			 console.log('notification event');
+			 navigator.notification.alert(
+				 data.message,         // message
+				 null,                 // callback
+				 data.title,           // title
+				 'Ok'                  // buttonName
+			 );
+		 });
+
+	push.on('error', function(e) {
+	   
+		   console.log("push error = " + e.message);
+	});
+	}
 			var date = new Date();
 			date.setDate(date.getDate() - 1);
 			var yesterday = date.toISOString().slice(0,10).replace(/-/g,"");
