@@ -55,6 +55,9 @@
         "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "com.dcss.wowsass"
         },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.dcss.wowsass"
+        },
         "cordova-plugin-vibration": {
             "PACKAGE_NAME": "com.dcss.wowsass"
         },
@@ -63,9 +66,6 @@
         },
         "phonegap-plugin-push": {
             "SENDER_ID": "920594832790",
-            "PACKAGE_NAME": "com.dcss.wowsass"
-        },
-        "cordova-plugin-statusbar": {
             "PACKAGE_NAME": "com.dcss.wowsass"
         }
     },

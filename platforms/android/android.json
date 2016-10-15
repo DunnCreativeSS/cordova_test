@@ -77,6 +77,10 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"StatusBar\"><param name=\"android-package\" value=\"org.apache.cordova.statusbar.StatusBar\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"Vibration\"><param name=\"android-package\" value=\"org.apache.cordova.vibration.Vibration\" /></feature>",
                             "count": 1
                         },
@@ -86,10 +90,6 @@
                         },
                         {
                             "xml": "<feature name=\"PushNotification\"><param name=\"android-package\" value=\"com.adobe.phonegap.push.PushPlugin\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"StatusBar\"><param name=\"android-package\" value=\"org.apache.cordova.statusbar.StatusBar\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -268,6 +268,9 @@
         "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "com.dcss.wowsass"
         },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.dcss.wowsass"
+        },
         "cordova-plugin-vibration": {
             "PACKAGE_NAME": "com.dcss.wowsass"
         },
@@ -276,9 +279,6 @@
         },
         "phonegap-plugin-push": {
             "SENDER_ID": "920594832790",
-            "PACKAGE_NAME": "com.dcss.wowsass"
-        },
-        "cordova-plugin-statusbar": {
             "PACKAGE_NAME": "com.dcss.wowsass"
         }
     },
@@ -786,6 +786,14 @@
             ]
         },
         {
+            "id": "cordova-plugin-statusbar.statusbar",
+            "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
+            "pluginId": "cordova-plugin-statusbar",
+            "clobbers": [
+                "window.StatusBar"
+            ]
+        },
+        {
             "id": "cordova-plugin-vibration.notification",
             "file": "plugins/cordova-plugin-vibration/www/vibration.js",
             "pluginId": "cordova-plugin-vibration",
@@ -800,14 +808,6 @@
             "pluginId": "phonegap-plugin-push",
             "clobbers": [
                 "PushNotification"
-            ]
-        },
-        {
-            "id": "cordova-plugin-statusbar.statusbar",
-            "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
-            "pluginId": "cordova-plugin-statusbar",
-            "clobbers": [
-                "window.StatusBar"
             ]
         }
     ],
@@ -830,9 +830,9 @@
         "cordova-plugin-media-capture": "1.2.0",
         "cordova-plugin-network-information": "1.2.1",
         "cordova-plugin-splashscreen": "3.2.2",
+        "cordova-plugin-statusbar": "2.2.0",
         "cordova-plugin-vibration": "2.1.2",
         "cordova-plugin-whitelist": "1.2.2",
-        "phonegap-plugin-push": "1.8.3",
-        "cordova-plugin-statusbar": "2.2.0"
+        "phonegap-plugin-push": "1.8.3"
     }
 }

@@ -13,9 +13,6 @@
         "cordova-plugin-camera": {
             "PACKAGE_NAME": "com.dcss.wowsass"
         },
-        "cordova-plugin-media-capture": {
-            "PACKAGE_NAME": "com.dcss.wowsass"
-        },
         "cordova-plugin-console": {
             "PACKAGE_NAME": "com.dcss.wowsass"
         },
@@ -49,10 +46,16 @@
         "cordova-plugin-media": {
             "PACKAGE_NAME": "com.dcss.wowsass"
         },
+        "cordova-plugin-media-capture": {
+            "PACKAGE_NAME": "com.dcss.wowsass"
+        },
         "cordova-plugin-network-information": {
             "PACKAGE_NAME": "com.dcss.wowsass"
         },
         "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.dcss.wowsass"
+        },
+        "cordova-plugin-statusbar": {
             "PACKAGE_NAME": "com.dcss.wowsass"
         },
         "cordova-plugin-vibration": {
@@ -63,9 +66,6 @@
         },
         "phonegap-plugin-push": {
             "SENDER_ID": "920594832790",
-            "PACKAGE_NAME": "com.dcss.wowsass"
-        },
-        "cordova-plugin-statusbar": {
             "PACKAGE_NAME": "com.dcss.wowsass"
         }
     },
