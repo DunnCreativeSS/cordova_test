@@ -205,7 +205,7 @@
                 "parents": {
                     "/resources": [
                         {
-                            "xml": "<string name=\"google_app_id\">920594832790</string>",
+                            "xml": "<string name=\"google_app_id\">90572826283</string>",
                             "count": 1
                         }
                     ]
@@ -278,7 +278,7 @@
             "PACKAGE_NAME": "com.dcss.wowsass"
         },
         "phonegap-plugin-push": {
-            "SENDER_ID": "920594832790",
+            "SENDER_ID": "90572826283",
             "PACKAGE_NAME": "com.dcss.wowsass"
         }
     },
