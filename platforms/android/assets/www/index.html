@@ -594,7 +594,6 @@ function filterFunction(e) {
 	<script>
 	
 		function doFinally(){
-		if (window.FirebasePlugin) {
 		FCMPlugin.getToken(
 		  function(token){
 			alert(token);
@@ -620,9 +619,7 @@ function filterFunction(e) {
       function(err){
         $('#body').append('Error registering onNotification callback: ' + err);
       });
-}else{
-	    setTimeout(doFinally, 1000);
-}
+
 }
 	  $(document).ready(function() { 
 	
@@ -646,7 +643,7 @@ function filterFunction(e) {
 		}); 
 	
 	
-	    setTimeout(doFinally,1000);
+	    setTimeout(doFinally,3000);
 	</script>
 </body>
 
