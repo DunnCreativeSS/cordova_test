@@ -7,12 +7,6 @@
         "files": {}
     },
     "installed_plugins": {
-        "cordova-plugin-battery-status": {
-            "PACKAGE_NAME": "com.dcss.wowsass"
-        },
-        "cordova-plugin-camera": {
-            "PACKAGE_NAME": "com.dcss.wowsass"
-        },
         "cordova-plugin-console": {
             "PACKAGE_NAME": "com.dcss.wowsass"
         },
@@ -25,56 +19,31 @@
         "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "com.dcss.wowsass"
         },
-        "cordova-plugin-network-information": {
-            "PACKAGE_NAME": "com.dcss.wowsass"
-        },
         "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "com.dcss.wowsass"
-        },
-        "cordova-plugin-vibration": {
-            "PACKAGE_NAME": "com.dcss.wowsass"
-        },
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.dcss.wowsass"
-        },
-        "cordova-plugin-file": {
-            "PACKAGE_NAME": "com.dcss.wowsass"
-        },
-        "cordova-plugin-file-transfer": {
-            "PACKAGE_NAME": "com.dcss.wowsass"
-        },
-        "cordova-plugin-media": {
-            "PACKAGE_NAME": "com.dcss.wowsass"
-        },
-        "cordova-plugin-device-motion": {
-            "PACKAGE_NAME": "com.dcss.wowsass"
-        },
-        "cordova-plugin-globalization": {
-            "PACKAGE_NAME": "com.dcss.wowsass"
-        },
-        "phonegap-plugin-push": {
-            "SENDER_ID": "222",
             "PACKAGE_NAME": "com.dcss.wowsass"
         },
         "cordova-plugin-statusbar": {
             "PACKAGE_NAME": "com.dcss.wowsass"
         },
-        "cordova-plugin-device-orientation": {
+        "cordova-plugin-velda-devicefeedback": {
             "PACKAGE_NAME": "com.dcss.wowsass"
         },
-        "cordova-plugin-fcm": {
+        "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.dcss.wowsass"
         },
-        "cordova-plugin-firebase": {
+        "ionic-plugin-deploy": {
             "PACKAGE_NAME": "com.dcss.wowsass"
         },
-        "cordova-plugin-media-capture": {
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "com.dcss.wowsass"
+        },
+        "phonegap-plugin-push": {
+            "SENDER_ID": "90572826283",
+            "PACKAGE_NAME": "com.dcss.wowsass"
+        },
+        "cordova-plugin-vibration": {
             "PACKAGE_NAME": "com.dcss.wowsass"
         }
     },
-    "dependent_plugins": {
-        "cordova-plugin-compat": {
-            "PACKAGE_NAME": "com.dcss.wowsass"
-        }
-    }
+    "dependent_plugins": {}
 }

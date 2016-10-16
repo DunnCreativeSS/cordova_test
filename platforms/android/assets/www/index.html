@@ -1,34 +1,65 @@
 <!DOCTYPE html>
-
 <html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
 
-<head>
-    <meta charset="utf-8" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="msapplication-tap-highlight" content="no" />
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
-    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
-     <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
-    <!-- Good default declaration:
-    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-        * Enable inline JS: add 'unsafe-inline' to default-src
-        * Enable eval(): add 'unsafe-eval' to default-src
-    * Create your own at http://cspisawesome.com
+    <link rel="manifest" href="manifest.json">
+
+    <!-- un-comment this code to enable service worker
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(() => console.log('service worker installed'))
+          .catch(err => console.log('Error', err));
+      }
+    </script>-->
+
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
     -->
-    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> 
-    <link rel="stylesheet" type="text/css" href="css/index.css" />
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+	
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> 
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/services.js"></script>
     <title>World of Warships Assistant</title>
 </head>
 <script>
-f1 = ""
-f1s = ""
-p1 = ""
-p1s = ""
-p2 = ""
-p2s = ""
+/*
+if (typeof console  != "undefined") 
+			if (typeof console.log != 'undefined')
+				console.olog = console.log;
+			else
+				console.olog = function() {};
+
+		console.log = function(message) {
+			console.olog(message);
+			$('#result').prepend('<p>' + message + '</p>');
+		};
+		window.onerror = function(message, url, linenumber) {
+			console.log("JavaScript error: " + message + " on line " + 
+					linenumber + " for " + url);
+		}
+		console.error = console.debug = console.info =  console.log */
+var push; 
+f1 = "";
+f1s = "";
+f1s = "";
+p1 = "";
+p1s = "";
+p2 = "";
+p2s = "";
 function filterF1(e) {
 	function submitNow(){
 		var input, filter, ul, li, a, i;
@@ -39,7 +70,7 @@ function filterF1(e) {
 				for (var i = 0; i <= data['data'].length; i++){
 					$('#f1Drop').append($('<a>', {
 						text: data['data'][i]['nickname'],
-						onclick: "$('#f1').val('" + data['data'][i]['nickname'] + "');$('#f1Drop').hide(); f1s='" + data['data'][i]['nickname'] + "'; f1=" + data['data'][i]['account_id']
+						onclick: "f1s = '" + data['data'][i]['nickname'] + "'; $('#f1').val('" + data['data'][i]['nickname'] + "');$('#f1Drop').hide(); f1s='" + data['data'][i]['nickname'] + "'; f1=" + data['data'][i]['account_id']
 					}));
 					
 				}
@@ -207,56 +238,62 @@ function statsGo(){
 		}
 	}
 }
+function subSuccess(){
+}
+function subFail(data){
+	console.log('fail: ' + data);
+}
 function followGo(){
-fcmPlugin.subscribeToTopic(f1);
-//fcmPlugin.unsubscribeFromTopic('topicExample');
+	topic = 'wowsassTopic' + f1;
+	$('#followStatus').append(topic);
+		push.subscribe(topic, function() {
 
-//$.get("http://dcssquared.com:68/pg/?follow=" + f1 + "&uuid=" + device.uuid, function(data, status){
-//			console.log("Data: " + data + "\nStatus: " + status);
-			$('#followStatus').html('Following: ' + f1);
-//		});
+	$('#followStatus').append('Following: ' + f1s);
+	}, function(e) {
+ 	console.log('error:');
+ 	console.log(e);
+ });
+$.get("http://dcssquared.com:68/pg/?follow=" + f1 + "&uuid=" + device.uuid, function(data, status){
+		console.log("Data: " + data + "\nStatus: " + status);
+		});
 }
 
 </script>
-<body>
+<body class="platform-android platform-cordova platform-webview">
     
-    <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript">
-        app.initialize();
-    </script><br><br><br><br><!--<div id="deviceProperties"></div>-->
+    <br><br><br><br><!--<div id="deviceProperties"></div>-->
     <div>
         <h1>World of Warships Cheat Sheet</h1>
 		
 		
 		
 		<h2>Follow Players?</h2>
-		<input type="text" placeholder="Player" id="f1" onKeyUp = "$('#followSubmit').attr('disabled', false);filterF1(this);">
-		<br><div id="f1Drop" class="dropdown-content" > </div><br><div id="followStatus"></div><br>
-		<input type='button' value="Follow" disabled id='followSubmit' onclick='followGo()' />
+		<input type="text" placeholder="Player" id="f1" onkeyup="filterF1(this);">
+		<br><div id="f1Drop" class="dropdown-content"> </div><br><div id="followStatus"></div><br>
+		<input type="button" value="Follow" disabled id="followSubmit" onclick="followGo()">
 		
 		<h2>Compare Players?</h2>
-		<input type="text" placeholder="Player 1" id="p1" onKeyUp = "filterP1(this);"><br>
-		<input type="text" placeholder="Player 2" id="p2" onKeyUp = "$('#achieveSubmit').attr('disabled', false); filterP2(this);">
-		<br><div id="p1Drop" class="dropdown-content" > </div><div id="p2Drop" class="dropdown-content" > </div><br><br>
-		<input type='button' value="Achievements" disabled id='achieveSubmit' onclick='achieveGo()' />
-		<input type='button' value="Stats" disabled id='todaySubmit' onclick='statsGo()' />
+		<input type="text" placeholder="Player 1" id="p1" onkeyup="filterP1(this);"><div />
+		<input type="text" placeholder="Player 2" id="p2" onkeyup="$('#achieveSubmit').attr('disabled', false); filterP2(this);">
+		<br><div id="p1Drop" class="dropdown-content"> </div><div id="p2Drop" class="dropdown-content"> </div><br><br>
+		<input type="button" value="Achievements" disabled id="achieveSubmit" onclick="achieveGo()">
+		<input type="button" value="Stats" disabled id="todaySubmit" onclick="statsGo()">
 		<select onchange="$('#todaySubmit').attr('disabled', false);" id="date">
 			<option id="nil" value="nil">Select</option>
-			<option id="optionToday"  value="test">Today</option>
+			<option id="optionToday" value="test">Today</option>
 			<option id="optionYesterday" value="test">Yesterday</option>
 			<option id="optionTwoDaysAgo" value="test">2 Days Ago</option>
 		</select>
-		<div style="display:none;" id = "shiphere" align="left">
+		<div style="display:none;" id="shiphere" align="left">
 		
 		</div>
-		<div id = "formhere" align="left">
+		<div id="formhere" align="left">
 		<br><h2>Or check out shipz?</h2>
-			<input type="text" placeholder="Ship Name.." id="boatIn" onKeyUp = "filterBoats(this);">
+			<input type="text" placeholder="Ship Name.." id="boatIn" onkeyup="filterBoats(this);">
 			<div class="dropdown">
-			    <button onclick="myFunction(1)" id = "tierDrop" data-tier = "0" class="dropbtn">Any Tier</button>
+			    <button onclick="myFunction(1)" id="tierDrop" data-tier="0" class="dropbtn">Any Tier</button>
 			    <div id="myDropdown1" class="dropdown-content">
-				<input type="text" placeholder="Search.." id="tierIn" onKeyUp = "filterFunction(this);">
+				<input type="text" placeholder="Search.." id="tierIn" onkeyup="filterFunction(this);">
 				<a onclick="tierClick(0);">Any Tier</a>
 				<a onclick="tierClick(1);">Tier 1</a>
 				<a onclick="tierClick(2);">Tier 2</a>
@@ -269,7 +306,7 @@ fcmPlugin.subscribeToTopic(f1);
 				<a onclick="tierClick(9);">Tier 9</a>
 				<a onclick="tierClick(10);">Tier 10</a>
 			  </div>
-			  <button onclick="myFunction(2)" id = "classDrop" data-class = "Any" class="dropbtn">Any Class</button>
+			  <button onclick="myFunction(2)" id="classDrop" data-class="Any" class="dropbtn">Any Class</button>
 			    <div id="myDropdown2" class="dropdown-content">
 				<input type="text" placeholder="Search.." id="myInput2" onkeyup="filterFunction(this);">
 				<a onclick="classClick('Any');">Any Class</a>
@@ -278,7 +315,7 @@ fcmPlugin.subscribeToTopic(f1);
 				<a onclick="classClick('Cruiser');">Cruiser</a>
 				<a onclick="classClick('Destroyer');">Destroyer</a>
 			  </div>
-			  <button onclick="myFunction(4)" id = "nationDrop" data-nation="Any" class="dropbtn">Any Nation</button>
+			  <button onclick="myFunction(4)" id="nationDrop" data-nation="Any" class="dropbtn">Any Nation</button>
 			    <div id="myDropdown4" class="dropdown-content">
 				<input type="text" placeholder="Search.." id="myInput4" onkeyup="filterFunction(this);">
 				<a onclick="nationClick('Any');">Any Nation</a>
@@ -293,7 +330,7 @@ fcmPlugin.subscribeToTopic(f1);
 				<a onclick="nationClick('poland');">Poland?</a>
 			  </div>
 			  
-			  <button onclick="myFunction(3)" id = "premiumDrop" data-premium="Any" class="dropbtn">Any Premium</button>
+			  <button onclick="myFunction(3)" id="premiumDrop" data-premium="Any" class="dropbtn">Any Premium</button>
 			    <div id="myDropdown3" class="dropdown-content">
 				<input type="text" placeholder="Search.." id="myInput3" onkeyup="filterFunction(this);">
 				<a onclick="premClick('Any');">Any Premium</a>
@@ -301,7 +338,7 @@ fcmPlugin.subscribeToTopic(f1);
 				<a onclick="premClick('false');">No Premium</a>
 			  </div>
 			</div>
-		</div>
+		</div> 
 <script>
 var bflast = ""
 var boatfilter = " "
@@ -587,42 +624,88 @@ function filterFunction(e) {
 }
 	</script>
 
-		<div id = "result">
+		<div id="result">
 		
 		</div>
     </div>
 	<script>
-	
-		function doFinally(){
-		FCMPlugin.getToken(
-		  function(token){
-			alert(token);
-		  },
-		  function(err){
-			alert('error retrieving token: ' + err);
-		  }
-		)
-    FCMPlugin.onNotification(
-      function(data){
-        if(data.wasTapped){
-          //Notification was received on device tray and tapped by the user.
-          $cordovaDialogs.alert(data.notification.body);
-        }else{
-          //Notification was received in foreground. Maybe the user needs to be notified.
-          $cordovaDialogs.alert(data.notification.body);
-          //$cordovaToast.showShortCenter( JSON.stringify(data) );
-        }
-      },
-      function(msg){
-        $('#body').append('onNotification callback successfully registered: ' + msg);
-      },
-      function(err){
-        $('#body').append('Error registering onNotification callback: ' + err);
-      });
+	function alertDismissed(){}
+	var app = {
+    // Application Constructor
+    initialize: function() {
+		console.log('init');
+        this.bindEvents();
+    },
+    // Bind Event Listeners
+    //
+    // Bind any events that are required on startup. Common events are:
+    // 'load', 'deviceready', 'offline', and 'online'.
+    bindEvents: function() {
+		console.log('binding');
+        document.addEventListener('deviceready', this.onDeviceReady, false);
+    },
+    // deviceready Event Handler
+    //
+    // The scope of 'this' is the event. In order to call the 'receivedEvent'
+    // function, we must explicitly call 'app.receivedEvent(...);'
+    onDeviceReady: function() {
+		console.log('ondeviceready');
+        app.receivedEvent('deviceready');
+    },
+    // Update DOM on a Received Event
+    receivedEvent: function(id) {	
+		console.log('recieved ' + id);
+		$('#followSubmit').attr('disabled', false);
+        push = PushNotification.init({
+			android: {
+				senderID: "90572826283"
+			},
+			ios: {
+				alert: "true",
+				badge: "true",
+				sound: "true"
+			},
+			windows: {}
+		})
+		;/*
+		push.unregister(function success(data)
+		{
+		alert('unreg');
+		}, 
+		function(data){
+		alert('still reg ' + data);
+		}, 
+		"test");*/
+		push.on('registration', function(data) {
+			console.log('registered ' + data.registrationId);
+			$.get("http://dcssquared.com:68/pg/?reg=" + data.registrationId + "&uuid=" + device.uuid);
+		});
 
-}
+		push.on('notification', function(data) {
+			navigator.notification.alert(
+				data['message'],  // message
+				alertDismissed,         // callback
+				data['title'],            // title
+				'w00t'                  // buttonName
+			);
+		});
+
+		push.on('error', function(e) {
+			console.log( e.message );
+		});
+		topic = 'wowsassTopicMaster';
+			push.subscribe(topic, function() {
+
+		}, function(e) {
+		console.log('error:');
+		console.log(e);
+	 });
+    }
+};
+
+
 	  $(document).ready(function() { 
-	
+	  app.initialize();
 	console.log('test');
 	
 			var date = new Date();
@@ -642,9 +725,19 @@ function filterFunction(e) {
 		getUrl(0, 'Any', 'Any', 'Any', 'Any');
 		}); 
 	
-	
-	    setTimeout(doFinally,3000);
 	</script>
-</body>
-
+    <!--
+      The nav bar that will be updated as we navigate between views.
+    -->
+    <ion-nav-bar class="bar-stable">
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+    </ion-nav-bar>
+    <!--
+      The views will be rendered in the <ion-nav-view> directive below
+      Templates are in the /templates folder (but you could also
+      have templates inline in this html file if you'd like).
+    -->
+    <ion-nav-view></ion-nav-view>
+  </body>
 </html>
